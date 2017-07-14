@@ -11,8 +11,8 @@ module.exports = function(io) {
 
   router.get('/users/:name', function(req, res) {
     let name = req.params.name;
-    let tweetsForUser = tweetBank.find( {name: name} );
-    res.render( 'index', { tweets: tweetsForUser } );
+    let list = tweetBank.find( {name: name} );
+    res.render( 'index', { tweets: list, showForm: true, person: list[0].name } );
   });
 
   router.get('/tweets/:id', function(req, res) {
@@ -20,20 +20,20 @@ module.exports = function(io) {
     let tweetByID = tweetBank.find( {id: id} );
     res.render( 'index', { tweets: tweetByID } );
   });
-
+  //post a tweet
   router.post('/tweets', function(req, res) {
     var name = req.body.name;
     var text = req.body.text;
     tweetBank.add(name, text);
 
-    let newTwwet = {
+    let newTweet = {
     name: name,
-    content: text,
-    id : result.rows[0].id
+    content: text
     };
-    io.sockets.emit('new_tweet', newTweet);
 
+    io.sockets.emit('new_tweet', newTweet);
     res.redirect('/');
+
   });
 
 

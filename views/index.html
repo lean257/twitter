@@ -9,7 +9,7 @@
   {% if showForm %}
     <form action="/tweets" method="POST">
       <label for="name_field">Name:</label>
-      <input name="name" type="text" id="name_field" />
+      <input name="name" type="text" id="name_field" value="{{person}}"/>
 
       <label for="text_field">Text:</label>
       <input name="text" type="text" id="text_field" style="width: 350px;" />
@@ -32,7 +32,7 @@
       {% for tweet in tweets | reverse %}
         <div class="tweet-block">
           <img src="{{ tweet.picture_url }}">
-          <div class="content">
+          <div id="dynamic" class="content">
             <p class="by"><a href="/users/{{ tweet.name }}">{{tweet.name}}</a></p>
             <p><a href="/tweets/{{ tweet.id }}">{{tweet.content}}</a></p>
           </div>
